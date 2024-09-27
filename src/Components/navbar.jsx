@@ -34,7 +34,7 @@ const Navbar = () => {
   ];
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: 'black', boxShadow: 'none' }}>
+    <AppBar position="fixed" sx={{ backgroundColor: 'black', boxShadow: 'none' }}>
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           <img src="/logo.png" alt="Logo" style={{ height: '40px' }} />
