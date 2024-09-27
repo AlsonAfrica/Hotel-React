@@ -8,13 +8,14 @@
     width:100%;
     display:flex;
     flex-direction: row;
-    background-color: #457475;
+    /* background-color: #457475; */
+    background-image: url("https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
     /* opacity: .8; */
 }
 .pages-text{
     height:100%;
     width:40%;
-    background-color: #457475;
+    /* background-color: #b7c5c5; */
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -89,16 +90,16 @@
     transition: transform 0.3s ease-in-out; /* Smooth animation */
 }
 .photo-4 img:hover {
-    transform: scale(1.2); /* Magnifies the image by 20% */
+    transform: scale(1.05); /* Magnifies the image by 20% */
 }
 .photo-3 img:hover{
-    transform: scale(1.2); /* Magnifies the image by 20% */
+    transform: scale(1.05); /* Magnifies the image by 20% */
 }
 .photo-2 img:hover{
-    transform: scale(1.2); /* Magnifies the image by 20% */
+    transform: scale(1.05); /* Magnifies the image by 20% */
 }
 .photo-1 img:hover{
-    transform: scale(1.2); /* Magnifies the image by 20% */
+    transform: scale(1.05); /* Magnifies the image by 20% */
 }
 .search-bar{
     margin-top: 20px;
