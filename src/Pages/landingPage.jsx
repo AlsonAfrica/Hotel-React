@@ -11,6 +11,7 @@ import logo from "../assets/logo.png"
 import pool from "../assets/pool.jpg"
 import gym from "../assets/gym.jpg"
 import parking from "../assets/parking.jpg"
+import { Link } from 'react-router-dom';
 
 const LandingPage = () => {
     return ( 
