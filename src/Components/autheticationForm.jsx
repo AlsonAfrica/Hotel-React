@@ -44,7 +44,7 @@ const SignInRegisterForm = () => {
 
     // Check if login was successful
     if (loginUser.fulfilled.match(resultAction)) {
-      navigate("/HomePage"); // Navigate to HomePage after successful login
+      navigate("/homePage"); // Navigate to HomePage after successful login
     } else {
       // Handle login error (you may want to show an error message here)
       console.error('Login failed:', resultAction.error.message);

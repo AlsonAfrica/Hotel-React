@@ -12,6 +12,7 @@ import pool from "../assets/pool.jpg"
 import gym from "../assets/gym.jpg"
 import parking from "../assets/parking.jpg"
 import { Link } from 'react-router-dom';
+import RoomsList from "../Components/roomlist";
 
 const HomePage = () => {
     return ( 
@@ -45,7 +46,9 @@ const HomePage = () => {
             </div>  
             <div className="Rooms">
                 <div className="rooms-text"><h1>View Our Rooms</h1></div>
-
+                 <div>
+                    <RoomsList/>
+                 </div>
             </div>
 
            

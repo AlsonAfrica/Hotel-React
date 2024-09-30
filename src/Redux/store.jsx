@@ -5,6 +5,8 @@ import ReviewsSlice from "./ReviewsSlice";
 import policiesSlice from "./policiesSlice";
 import profileSlice from "./profileSlice";
 import authenticationSlice from "./authenticationSlice";
+import roompopupSlice from "./roompopupSlice";
+
 
 
 
@@ -15,7 +17,8 @@ export const store = configureStore({
         reviews: ReviewsSlice,
         policies: policiesSlice,
         profile: profileSlice,
-        auth: authenticationSlice
+        auth: authenticationSlice,
+        roommodal:roompopupSlice
     },
 });
 export default store;
