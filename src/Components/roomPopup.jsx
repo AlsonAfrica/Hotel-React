@@ -5,10 +5,13 @@ import { closeroomPopup } from '../Redux/roompopupSlice';
 import { Close, Wifi, LocalParking, AcUnit, Pool, Restaurant } from '@mui/icons-material';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { savePayment } from '../Redux/paymentSlice';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const RoomModal = () => {
   const dispatch = useDispatch();
   const stripe = useStripe();
+  const navigate = useNavigate();
+  const location = useLocation();
   const elements = useElements();
   const [loading, setLoading] = useState(false); // Initialize loading state
   const { isOpen, selectedRoom } = useSelector((state) => state.roommodal);
@@ -56,7 +59,6 @@ const RoomModal = () => {
           numPeople,
           roomType: selectedRoom.roomType,
           paymentMethodId: paymentMethod.id,
-          userName: userName 
         })).unwrap();
   
         setLoading(false);
@@ -67,7 +69,18 @@ const RoomModal = () => {
         setLoading(false);
       }
     }
-  };
+  }; 
+
+  const handleButtonClick = (event) =>{
+    event.preventDefault();
+    if (location.pathname === '/home'){
+      handleSubmit()
+    } else if (location.pathname === "/"){
+      navigate("/authetication");
+    }
+  }
+
+
   const modalStyle = {
     position: 'absolute',
     top: '50%',
@@ -224,13 +237,15 @@ const RoomModal = () => {
               <CardElement options={{ hidePostalCode: true }} />
 
               <Button
+                onClick={handleButtonClick}
                 type="submit"
                 variant="contained"
                 color="primary"
                 sx={{ mt: 2 }}
                 disabled={!stripe || loading}
               >
-                {loading ? 'Processing...' : 'Pay'}
+                {location.pathname === '/home' ? (loading ? 'Processing...':'Pay'): "Pay"}
+             
               </Button>
             </Box>
           </Grid>

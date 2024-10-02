@@ -18,12 +18,11 @@ export const savePayment = createAsyncThunk(
       await setDoc(paymentRef, {
         userId: user.uid,
         userEmail: user.email,
-        userName: user.displayName, // This will be null if not set
         ...paymentDetails,
         paymentDate: new Date().toISOString(),
       });
 
-      return { id: paymentId, userId: user.uid, userEmail:user.email, userName: userdisplayName,...paymentDetails, paymentDate: new Date().toISOString() };
+      return { id: paymentId, userId: user.uid, userEmail:user.email,...paymentDetails, paymentDate: new Date().toISOString() };
     } catch (error) {
       return rejectWithValue(error.message);
     }
