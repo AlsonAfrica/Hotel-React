@@ -59,6 +59,7 @@ const RoomModal = () => {
           numPeople,
           roomType: selectedRoom.roomType,
           paymentMethodId: paymentMethod.id,
+
         })).unwrap();
   
         setLoading(false);
@@ -71,8 +72,7 @@ const RoomModal = () => {
     }
   }; 
 
-  const handleButtonClick = (event) =>{
-    event.preventDefault();
+  const handleButtonClick = () =>{
     if (location.pathname === '/home'){
       handleSubmit()
     } else if (location.pathname === "/"){
