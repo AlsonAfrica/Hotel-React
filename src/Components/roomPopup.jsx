@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closeroomPopup } from '../Redux/roompopupSlice';
 import { Close, Wifi, LocalParking, AcUnit, Pool, Restaurant } from '@mui/icons-material';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { savePayment } from '../Redux/paymentSlice';
 
 const RoomModal = () => {
   const dispatch = useDispatch();
@@ -42,16 +43,31 @@ const RoomModal = () => {
 
     if (paymentError) {
       console.error('[Payment Error]', paymentError);
-      setError(paymentError.message); // Show the error message to the user
+      setError(paymentError.message);
       setLoading(false);
     } else {
       console.log('[PaymentMethod]', paymentMethod);
-      setLoading(false);
-      alert('Payment Successful!');
-      dispatch(closeroomPopup()); // Close the modal on successful payment
+      
+      try {
+        await dispatch(savePayment({
+          amountPaid: selectedRoom.price * numPeople,
+          checkInDate, 
+          checkOutDate, 
+          numPeople,
+          roomType: selectedRoom.roomType,
+          paymentMethodId: paymentMethod.id,
+          userName: userName 
+        })).unwrap();
+  
+        setLoading(false);
+        alert('Payment Successful!');
+        dispatch(closeroomPopup());
+      } catch (error) {
+        setError('Payment failed: ' + error);
+        setLoading(false);
+      }
     }
   };
-
   const modalStyle = {
     position: 'absolute',
     top: '50%',
