@@ -14,7 +14,7 @@ const ReviewsPopup = ()=>{
         <div className="popup">
         <h2>Messages</h2>
         <p>This is your Reviews information</p>
-        <button onClick={() => dispatch(closeReviewsPopup('reviews'))}>Close</button>
+        <button className="close-button" onClick={() => dispatch(closeReviewsPopup('gallery'))}>&times;</button>
         </div>
       </div>
     );

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { closeProfilePopup } from "../Redux/profileSlice";
-import { Box, Button, TextField, Typography, Tab, Tabs } from '@mui/material';
+import { Box, Button, TextField, Typography, Tab, Tabs, Rating } from '@mui/material';
 import { Book, Favorite, Message, RateReview, Person } from '@mui/icons-material'; 
 import "../Styles/profile.css";
 
@@ -11,6 +11,7 @@ const ProfilePopup = () => {
     const [activeTab, setActiveTab] = useState(0); 
     const [reviewTitle, setReviewTitle] = useState('');
     const [reviewContent, setReviewContent] = useState('');
+    const [rating, setRating] = useState(0); // State for star rating
 
     if (!isOpen) return null;
 
@@ -20,9 +21,10 @@ const ProfilePopup = () => {
 
     const handleReviewSubmit = (event) => {
         event.preventDefault();
-        console.log('Review submitted:', { title: reviewTitle, content: reviewContent });
+        console.log('Review submitted:', { title: reviewTitle, content: reviewContent, rating });
         setReviewTitle('');
         setReviewContent('');
+        setRating(0); // Reset rating after submission
     };
 
     return (
@@ -65,7 +67,7 @@ const ProfilePopup = () => {
                                 textAlign: 'center', 
                                 borderColor: '#f44336', 
                                 color: '#f44336',
-                                '&:hover': { backgroundColor: '#fce4ec' } // Light pink on hover
+                                '&:hover': { backgroundColor: '#fce4ec' } 
                             }} 
                         />
                         <Tab 
@@ -77,7 +79,7 @@ const ProfilePopup = () => {
                                 textAlign: 'center', 
                                 borderColor: '#ff9800', 
                                 color: '#ff9800',
-                                '&:hover': { backgroundColor: '#fff3e0' } // Light orange on hover
+                                '&:hover': { backgroundColor: '#fff3e0' } 
                             }} 
                         />
                         <Tab 
@@ -89,7 +91,7 @@ const ProfilePopup = () => {
                                 textAlign: 'center', 
                                 borderColor: '#2196f3', 
                                 color: '#2196f3',
-                                '&:hover': { backgroundColor: '#e3f2fd' } // Light blue on hover
+                                '&:hover': { backgroundColor: '#e3f2fd' } 
                             }} 
                         />
                         <Tab 
@@ -101,7 +103,7 @@ const ProfilePopup = () => {
                                 textAlign: 'center', 
                                 borderColor: '#4caf50', 
                                 color: '#4caf50',
-                                '&:hover': { backgroundColor: '#e8f5e9' } // Light green on hover
+                                '&:hover': { backgroundColor: '#e8f5e9' } 
                             }} 
                         />
                         <Tab 
@@ -113,7 +115,7 @@ const ProfilePopup = () => {
                                 textAlign: 'center', 
                                 borderColor: '#9c27b0', 
                                 color: '#9c27b0',
-                                '&:hover': { backgroundColor: '#f3e5f5' } // Light purple on hover
+                                '&:hover': { backgroundColor: '#f3e5f5' } 
                             }} 
                         />
                     </Tabs>
@@ -141,6 +143,14 @@ const ProfilePopup = () => {
                                     value={reviewContent}
                                     onChange={(e) => setReviewContent(e.target.value)}
                                     sx={{ mb: 1 }} 
+                                />
+                                {/* Star Rating Component */}
+                                <Rating
+                                    name="rating"
+                                    value={rating}
+                                    onChange={(event, newValue) => setRating(newValue)}
+                                    precision={0.5}
+                                    sx={{ mb: 2 }}
                                 />
                                 <Button type="submit" variant="contained" color="primary">
                                     Submit Review

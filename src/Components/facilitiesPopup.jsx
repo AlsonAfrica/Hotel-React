@@ -14,7 +14,7 @@ const FacilitiesPopup = ()=>{
         <div className="popup">
         <h2>Messages</h2>
         <p>This is your Facilities information</p>
-        <button onClick={() => dispatch(closeFacilitiesPopup('facilities'))}>Close</button>
+        <button className="close-button" onClick={() => dispatch(closeFacilitiesPopup('facilities'))}>&times;</button>
         </div>
       </div>
     );
