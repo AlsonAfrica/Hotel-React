@@ -14,7 +14,7 @@ const PoliciesPopup = ()=>{
         <div className="popup">
         <h2>Messages</h2>
         <p>This is your Policies.. information</p>
-        <button onClick={() => dispatch(closePoliciesPopup('policies'))}>Close</button>
+        <button className="close-button" onClick={() => dispatch(closePoliciesPopup('policies'))}>&times;</button>
         </div>
       </div>
     );

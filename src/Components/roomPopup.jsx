@@ -5,10 +5,14 @@ import { closeroomPopup } from '../Redux/roompopupSlice';
 import { addPayment } from '../Redux/paymentSlice';
 import { Close, Wifi, LocalParking, AcUnit, Pool, Restaurant } from '@mui/icons-material';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { savePayment } from '../Redux/paymentSlice';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const RoomModal = () => {
   const dispatch = useDispatch();
   const stripe = useStripe();
+  const navigate = useNavigate();
+  const location = useLocation();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
   const { isOpen, selectedRoom } = useSelector((state) => state.roommodal);
@@ -48,24 +52,35 @@ const RoomModal = () => {
     } else {
       console.log('[PaymentMethod]', paymentMethod);
       
-      // Create the payment data object
-      const paymentData = {
-        checkInDate,
-        checkOutDate,
-        numPeople,
-        amount: selectedRoom.price, // Assuming price is per night
-        roomId: selectedRoom.id,
-        roomType: selectedRoom.roomType,
-      };
+      try {
+        await dispatch(savePayment({
+          amountPaid: selectedRoom.price * numPeople,
+          checkInDate, 
+          checkOutDate, 
+          numPeople,
+          roomType: selectedRoom.roomType,
+          paymentMethodId: paymentMethod.id,
 
-      // Dispatch the action to add payment to the store and Firestore
-      dispatch(addPayment(paymentData));
-      
-      setLoading(false);
-      alert('Payment Successful!');
-      dispatch(closeroomPopup());
+        })).unwrap();
+  
+        setLoading(false);
+        alert('Payment Successful!');
+        dispatch(closeroomPopup());
+      } catch (error) {
+        setError('Payment failed: ' + error);
+        setLoading(false);
+      }
     }
-  };
+  }; 
+
+  const handleButtonClick = () =>{
+    if (location.pathname === '/home'){
+      handleSubmit()
+    } else if (location.pathname === "/"){
+      navigate("/authetication");
+    }
+  }
+
 
   const modalStyle = {
     position: 'absolute',
@@ -219,16 +234,18 @@ const RoomModal = () => {
 
             <CardElement />
 
-            <Button 
-              variant="contained" 
-              color="primary" 
-              fullWidth 
-              onClick={handleSubmit} 
-              disabled={!stripe || loading} 
-              sx={{ mt: 2 }}
-            >
-              {loading ? 'Processing...' : 'Book Now'}
-            </Button>
+              <Button
+                onClick={handleButtonClick}
+                type="submit"
+                variant="contained"
+                color="primary"
+                sx={{ mt: 2 }}
+                disabled={!stripe || loading}
+              >
+                {location.pathname === '/home' ? (loading ? 'Processing...':'Pay'): "Pay"}
+             
+              </Button>
+            </Box>
           </Grid>
         </Grid>
       </Box>
