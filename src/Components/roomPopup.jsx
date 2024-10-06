@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Box, Typography, IconButton, Grid, TextField, Select, MenuItem, InputLabel, FormControl, Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeroomPopup } from '../Redux/roompopupSlice';
+import { addPayment } from '../Redux/paymentSlice';
 import { Close, Wifi, LocalParking, AcUnit, Pool, Restaurant } from '@mui/icons-material';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
@@ -9,11 +10,11 @@ const RoomModal = () => {
   const dispatch = useDispatch();
   const stripe = useStripe();
   const elements = useElements();
-  const [loading, setLoading] = useState(false); // Initialize loading state
+  const [loading, setLoading] = useState(false);
   const { isOpen, selectedRoom } = useSelector((state) => state.roommodal);
 
   const [checkInDate, setCheckInDate] = useState('');
-  const [checkOutDate, setCheckOutDate] = useState(''); // Fixed typo here
+  const [checkOutDate, setCheckOutDate] = useState('');
   const [numPeople, setNumPeople] = useState(1);
   const [error, setError] = useState('');
 
@@ -42,13 +43,27 @@ const RoomModal = () => {
 
     if (paymentError) {
       console.error('[Payment Error]', paymentError);
-      setError(paymentError.message); // Show the error message to the user
+      setError(paymentError.message);
       setLoading(false);
     } else {
       console.log('[PaymentMethod]', paymentMethod);
+      
+      // Create the payment data object
+      const paymentData = {
+        checkInDate,
+        checkOutDate,
+        numPeople,
+        amount: selectedRoom.price, // Assuming price is per night
+        roomId: selectedRoom.id,
+        roomType: selectedRoom.roomType,
+      };
+
+      // Dispatch the action to add payment to the store and Firestore
+      dispatch(addPayment(paymentData));
+      
       setLoading(false);
       alert('Payment Successful!');
-      dispatch(closeroomPopup()); // Close the modal on successful payment
+      dispatch(closeroomPopup());
     }
   };
 
@@ -170,7 +185,7 @@ const RoomModal = () => {
                   type="date" 
                   fullWidth 
                   InputLabelProps={{ shrink: true }} 
-                  onChange={(e) => setCheckOutDate(e.target.value)} // Fixed typo here
+                  onChange={(e) => setCheckOutDate(e.target.value)}
                 />
               </Grid>
             </Grid>
@@ -196,27 +211,24 @@ const RoomModal = () => {
               </Grid>
             </Grid>
 
-            {error && <Typography color="error">{error}</Typography>} {/* Display error message */}
+            {error && (
+              <Typography variant="body2" color="error" sx={{ mt: 1 }}>
+                {error}
+              </Typography>
+            )}
 
-            <Box 
-              component="form" 
-              onSubmit={handleSubmit} 
-              sx={{ mt: 3, display: 'flex', flexDirection: 'column', gap: 2 }}
+            <CardElement />
+
+            <Button 
+              variant="contained" 
+              color="primary" 
+              fullWidth 
+              onClick={handleSubmit} 
+              disabled={!stripe || loading} 
+              sx={{ mt: 2 }}
             >
-              <Typography variant="h6" color="#2196F3">Room Payment</Typography>
-
-              <CardElement options={{ hidePostalCode: true }} />
-
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                sx={{ mt: 2 }}
-                disabled={!stripe || loading}
-              >
-                {loading ? 'Processing...' : 'Pay'}
-              </Button>
-            </Box>
+              {loading ? 'Processing...' : 'Book Now'}
+            </Button>
           </Grid>
         </Grid>
       </Box>
