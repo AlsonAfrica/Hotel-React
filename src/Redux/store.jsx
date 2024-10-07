@@ -7,6 +7,7 @@ import profileSlice from "./profileSlice";
 import authenticationSlice from "./authenticationSlice";
 import roompopupSlice from "./roompopupSlice";
 import paymentSlice from "./paymentSlice";
+import roomDataSlice from "./roomDataSlice";
 
 export const store = configureStore({
     reducer: {
@@ -17,7 +18,8 @@ export const store = configureStore({
         profile: profileSlice,
         auth: authenticationSlice,
         roommodal:roompopupSlice,
-        payments:paymentSlice
+        payments:paymentSlice,
+        rooms:roomDataSlice
     },
 });
 export default store;

@@ -1,67 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Grid, Container } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchRooms } from '../Redux/roomDataSlice';
 import Rooms from './rooms';
 import RoomModal from './roomPopup';
 
-const roomsData = [
-  {
-    roomType: 'Deluxe Room',
-    image: 'https://source.unsplash.com/featured/?deluxe-room',
-    price: 120,
-    occupants: 4,
-    rating: 4.5,
-    amenities: ['wifi', 'ac', 'tv', 'parking'],
-  },
-  {
-    roomType: 'Suite',
-    image: 'https://source.unsplash.com/featured/?suite-room',
-    price: 200,
-    occupants: 6,
-    rating: 4.8,
-    amenities: ['wifi', 'ac', 'tv'],
-  },
-  {
-    roomType: 'Standard Room',
-    image: 'https://source.unsplash.com/featured/?standard-room',
-    price: 80,
-    occupants: 2,
-    rating: 4.2,
-    amenities: ['wifi', 'parking'],
-  },
-  {
-    roomType: 'Standard Room',
-    image: 'https://source.unsplash.com/featured/?standard-room',
-    price: 80,
-    occupants: 2,
-    rating: 4.2,
-    amenities: ['wifi', 'parking'],
-  },
-  {
-    roomType: 'Standard Room',
-    image: 'https://source.unsplash.com/featured/?standard-room',
-    price: 80,
-    occupants: 2,
-    rating: 4.2,
-    amenities: ['wifi', 'parking'],
-  },
-  {
-    roomType: 'Standard Room',
-    image: 'https://source.unsplash.com/featured/?standard-room',
-    price: 80,
-    occupants: 2,
-    rating: 4.2,
-    amenities: ['wifi', 'parking'],
-  },
-  // Add more rooms if needed
-];
-
 const RoomsList = () => {
+  const dispatch = useDispatch();
+  const { rooms, loading, error } = useSelector((state) => state.rooms);
+
+  useEffect(() => {
+    dispatch(fetchRooms());
+  }, [dispatch]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <Container sx={{ py: 4 }}>
-        <RoomModal/>
+      <RoomModal />
       <Grid container spacing={4} justifyContent="center">
-        {roomsData.map((room, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
+        {rooms.map((room) => (
+          <Grid item xs={12} sm={6} md={4} key={room.id}>
             <Rooms
               roomType={room.roomType}
               image={room.image}

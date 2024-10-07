@@ -45,7 +45,7 @@
   .close-button {
     position: absolute;
     top: 10px;
-    right: 10px;
+    right: 20px;
     background: none;
     /* border: none; */
     font-size: 24px;
@@ -58,4 +58,45 @@
 
 .close-button:hover {
     color: #ff0000; /* Change color on hover */
+}
+
+.policies-container {
+  margin-top: 20px;
+}
+
+.policy-card {
+  border: 2px solid transparent; /* Default border */
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.policy-card-0 {
+  border-color: #FF5733; /* Cancellation Policy */
+}
+
+.policy-card-1 {
+  border-color: #FFBD33; /* Check-in/Check-out Policy */
+}
+
+.policy-card-2 {
+  border-color: #33FF57; /* Smoking Policy */
+}
+
+.policy-card-3 {
+  border-color: #3357FF; /* Pet Policy */
+}
+
+.policy-card-4 {
+  border-color: #FF33A1; /* Payment Policy */
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  cursor: pointer;
 }

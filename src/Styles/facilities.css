@@ -41,4 +41,16 @@
   .popup button:hover {
     background-color: #0056b3;
   }
+  .image-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 columns */
+    gap: 10px; /* space between images */
+    margin: 20px 0;
+}
+
+.image-item img {
+    width: 100%; /* make images responsive */
+    height: auto; /* maintain aspect ratio */
+    border-radius: 4px; /* optional rounded corners */
+}
   

@@ -73,9 +73,10 @@ const RoomModal = () => {
     }
   }; 
 
-  const handleButtonClick = () =>{
+  const handleButtonClick = (event) =>{
+    event.preventDefault();
     if (location.pathname === '/home'){
-      handleSubmit()
+      handleSubmit(event)
     } else if (location.pathname === "/"){
       navigate("/authetication");
     }
@@ -139,7 +140,7 @@ const RoomModal = () => {
             <Close />
           </IconButton>
         </Box>
-
+  
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Typography id="modal-description" sx={{ mt: 2, fontWeight: 'bold', color: '#555' }}>
@@ -148,7 +149,7 @@ const RoomModal = () => {
             <Typography>
               Occupies {selectedRoom.occupants} people
             </Typography>
-
+  
             <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
               {selectedRoom.amenities.map((amenity) => (
                 <Box key={amenity} sx={amenityStyle}>
@@ -157,31 +158,31 @@ const RoomModal = () => {
                 </Box>
               ))}
             </Box>
-
+  
             <Typography sx={{ mt: 2, fontWeight: 'bold', color: '#555' }}>
               Rating: <span style={{ color: '#2196F3' }}>{selectedRoom.rating}</span>
             </Typography>
-
+  
             <Box sx={{ mt: 3 }}>
               <Typography variant="h6" color="#2196F3">Room Policies</Typography>
               <Typography variant="body2" sx={{ mt: 1 }}>
                 Check-in: 2 PM, Check-out: 11 AM
               </Typography>
-
+  
               <Typography variant="h6" sx={{ mt: 2, color: '#2196F3' }}>Payment Policies</Typography>
               <Typography variant="body2" sx={{ mt: 1 }}>
                 Payment is required at the time of booking.
               </Typography>
             </Box>
           </Grid>
-
+  
           <Grid item xs={12} md={6}>
             <img 
               src={selectedRoom.image} 
               alt={selectedRoom.roomType} 
               style={{ width: '100%', height: 'auto', borderRadius: '8px', border: '2px solid #2196F3' }}
             />
-
+  
             <Grid container spacing={2} sx={{ mt: 2 }}>
               <Grid item xs={12} md={6}>
                 <TextField 
@@ -204,7 +205,7 @@ const RoomModal = () => {
                 />
               </Grid>
             </Grid>
-
+  
             <Grid container spacing={2} sx={{ mt: 2 }}>
               <Grid item xs={12}>
                 <FormControl fullWidth>
@@ -225,25 +226,25 @@ const RoomModal = () => {
                 </FormControl>
               </Grid>
             </Grid>
-
+  
             {error && (
               <Typography variant="body2" color="error" sx={{ mt: 1 }}>
                 {error}
               </Typography>
             )}
-
-            <CardElement />
-
+  
+            <Box sx={{ mt: 2 }}>
+              <CardElement />
+  
               <Button
                 onClick={handleButtonClick}
-                type="submit"
+                type="button"
                 variant="contained"
                 color="primary"
                 sx={{ mt: 2 }}
                 disabled={!stripe || loading}
               >
-                {location.pathname === '/home' ? (loading ? 'Processing...':'Pay'): "Pay"}
-             
+                {location.pathname === '/home' ? (loading ? 'Processing...' : 'Pay') : "Pay"}
               </Button>
             </Box>
           </Grid>
@@ -251,6 +252,7 @@ const RoomModal = () => {
       </Box>
     </Modal>
   );
+  
 };
 
 export default RoomModal;
