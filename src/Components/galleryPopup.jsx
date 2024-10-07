@@ -14,6 +14,7 @@ const GalleryPopup = ()=>{
         <div className="popup">
         <h2>Messages</h2>
         <p>This is your Gallery information</p>
+        
         <button className="close-button" onClick={() => dispatch(closeGalleryPopup('gallery'))}>&times;</button>
         </div>
       </div>
