@@ -1,20 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { closeProfilePopup } from "../Redux/profileSlice";
 import { Box, Button, TextField, Typography, Tab, Tabs, Rating } from '@mui/material';
 import { Book, Favorite, Message, RateReview, Person } from '@mui/icons-material'; 
+import { fetchUserData } from "../Redux/loggedInUserSlice"; // Your redux action
+import { auth } from "../FirebaseConfig/firebase";
 import "../Styles/profile.css";
+import { Firestore } from "firebase/firestore";
+import zIndex from "@mui/material/styles/zIndex";
 
 const ProfilePopup = () => {
     const dispatch = useDispatch();
     const isOpen = useSelector((state) => state.profile.isOpen);
+    const userData = useSelector((state) => state.user.userData);
+    const loading = useSelector((state) => state.user.loading);
+    const error = useSelector((state) => state.user.error);
     const [activeTab, setActiveTab] = useState(0); 
     const [reviewTitle, setReviewTitle] = useState('');
     const [reviewContent, setReviewContent] = useState('');
-    const [rating, setRating] = useState(0); // State for star rating
+    const [rating, setRating] = useState(0);
+
+    useEffect(() => {
+        if (isOpen) {
+            const user = auth.currentUser; // Get the currently signed-in user
+            if (user) {
+                const userId = user.uid; // Retrieve user ID from Firebase Auth
+                dispatch(fetchUserData(userId)); // Fetch user data using the user ID
+            }
+        }
+    }, [isOpen, dispatch]);
 
     if (!isOpen) return null;
-
+    
+    // Handles tab navigation
     const handleTabChange = (event, newValue) => {
         setActiveTab(newValue);
     };
@@ -30,96 +48,66 @@ const ProfilePopup = () => {
     return (
         <div className="popup-overlay">
             <div className="popup">
-                <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', color: '#333' }}>
+                <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', color: '#334' }}>
                     Profile
                 </Typography>
                 <Button 
-                    variant="outlined" 
+                    // variant="outlined" 
                     onClick={() => dispatch(closeProfilePopup('profile'))} 
                     sx={{ 
                         alignSelf: 'flex-end', 
-                        borderColor: '#6200ea', 
-                        color: '#6200ea', 
+                        borderColor: 'black', 
+                        color: 'black', 
+                        position:"absolute",
+                        top:"10px",
+                        right:"90px",
+                        zIndex:100,
+                        backgroundColor:"black",
                         '&:hover': { 
-                            borderColor: '#3700b3', 
-                            color: '#3700b3' 
+                            borderColor: 'black', 
+                            color: 'black',
+                            backgroundColor: 'darkgray'
                         } 
                     }}
                 >
-                    Close
+                    &times;
                 </Button>
 
-                <Box sx={{ width: '100%', mt: 2 }}>
+                <Box sx={{ width: '100%', mt: 2, }}>
                     <Tabs 
                         value={activeTab} 
                         onChange={handleTabChange} 
                         variant="scrollable" 
-                        textColor="primary" 
                         indicatorColor="primary"
-                        sx={{ display: 'flex', flexWrap: { xs: 'wrap', sm: 'nowrap' }, gap: 2 }} 
+                        sx={{ display: 'flex', flexWrap: { xs: 'wrap', sm: 'nowrap' }, gap: 10 }} 
                     >
                         <Tab 
                             label="Bookings" 
                             icon={<Book />} 
-                            sx={{ 
-                                flexGrow: 1, 
-                                padding: { xs: '10px', sm: '16px' }, 
-                                textAlign: 'center', 
-                                borderColor: '#f44336', 
-                                color: '#f44336',
-                                '&:hover': { backgroundColor: '#fce4ec' } 
-                            }} 
+                            sx={{ flexGrow: 1,}} 
                         />
                         <Tab 
                             label="Favorites" 
                             icon={<Favorite />} 
-                            sx={{ 
-                                flexGrow: 1, 
-                                padding: { xs: '10px', sm: '16px' }, 
-                                textAlign: 'center', 
-                                borderColor: '#ff9800', 
-                                color: '#ff9800',
-                                '&:hover': { backgroundColor: '#fff3e0' } 
-                            }} 
+                            sx={{ flexGrow: 1, }} 
                         />
                         <Tab 
                             label="Messages" 
                             icon={<Message />} 
-                            sx={{ 
-                                flexGrow: 1, 
-                                padding: { xs: '10px', sm: '16px' }, 
-                                textAlign: 'center', 
-                                borderColor: '#2196f3', 
-                                color: '#2196f3',
-                                '&:hover': { backgroundColor: '#e3f2fd' } 
-                            }} 
+                            sx={{ flexGrow: 1 }} 
                         />
                         <Tab 
                             label="Reviews" 
                             icon={<RateReview />} 
-                            sx={{ 
-                                flexGrow: 1, 
-                                padding: { xs: '10px', sm: '16px' }, 
-                                textAlign: 'center', 
-                                borderColor: '#4caf50', 
-                                color: '#4caf50',
-                                '&:hover': { backgroundColor: '#e8f5e9' } 
-                            }} 
+                            sx={{ flexGrow: 1 }} 
                         />
                         <Tab 
                             label="User Profile" 
                             icon={<Person />} 
-                            sx={{ 
-                                flexGrow: 1, 
-                                padding: { xs: '10px', sm: '16px' }, 
-                                textAlign: 'center', 
-                                borderColor: '#9c27b0', 
-                                color: '#9c27b0',
-                                '&:hover': { backgroundColor: '#f3e5f5' } 
-                            }} 
+                            sx={{ flexGrow: 1 }} 
                         />
                     </Tabs>
-                    <Box sx={{ p: 2, border: '1px solid #e0e0e0', borderRadius: '4px', backgroundColor: '#fafafa' }}>
+                    <Box sx={{ p: 2, border: '1px solid #e0e0e0', borderRadius: '4px', backgroundColor: '#fafaf' }}>
                         {activeTab === 0 && <Typography variant="body1">Bookings content goes here...</Typography>}
                         {activeTab === 1 && <Typography variant="body1">Favorites content goes here...</Typography>}
                         {activeTab === 2 && <Typography variant="body1">Messages content goes here...</Typography>}
@@ -144,7 +132,6 @@ const ProfilePopup = () => {
                                     onChange={(e) => setReviewContent(e.target.value)}
                                     sx={{ mb: 1 }} 
                                 />
-                                {/* Star Rating Component */}
                                 <Rating
                                     name="rating"
                                     value={rating}
@@ -157,7 +144,48 @@ const ProfilePopup = () => {
                                 </Button>
                             </Box>
                         )}
-                        {activeTab === 4 && <Typography variant="body1">User Profile content goes here...</Typography>}
+                        {activeTab === 4 && (
+                            <Box sx={{ mt: 2 }}>
+                                <Typography variant="h6" gutterBottom>User Profile</Typography>
+                                {loading && <Typography>Loading...</Typography>}
+                                {error && <Typography color="error">{error}</Typography>}
+                                {userData && (
+                                    <>
+                                        <TextField
+                                            fullWidth
+                                            label="Name"
+                                            variant="outlined"
+                                            margin="normal"
+                                            value={userData.username || ''}
+                                            InputProps={{
+                                                readOnly: true,
+                                            }}
+                                        />
+                                        <TextField
+                                            fullWidth
+                                            label="Phone Number"
+                                            variant="outlined"
+                                            margin="normal"
+                                            value={userData.cellphone || ''}
+                                            InputProps={{
+                                                readOnly: true,
+                                            }}
+                                        />
+                                        <TextField
+                                            fullWidth
+                                            label="Email"
+                                            type="email"
+                                            variant="outlined"
+                                            margin="normal"
+                                            value={userData.email || ''}
+                                            InputProps={{
+                                                readOnly: true,
+                                            }}
+                                        />
+                                    </>
+                                )}
+                            </Box>
+                        )}
                     </Box>
                 </Box>
             </div>
