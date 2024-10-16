@@ -59,3 +59,16 @@
 .close-button:hover {
     color: #ff0000; /* Change color on hover */
 }
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 columns */
+  gap: 10px; /* space between images */
+  margin: 20px 0;
+}
+
+.image-item img {
+  width: 100%; /* make images responsive */
+  height: 100%; /* maintain aspect ratio */
+  border-radius: 4px; /* optional rounded corners */
+}

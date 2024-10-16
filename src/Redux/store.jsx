@@ -8,6 +8,9 @@ import authenticationSlice from "./authenticationSlice";
 import roompopupSlice from "./roompopupSlice";
 import paymentSlice from "./paymentSlice";
 import roomDataSlice from "./roomDataSlice";
+import facilitiesImageSlice from "./facilitiesImageSlice";
+import galleryImageSlice from "./galleryImageSlice";
+
 
 export const store = configureStore({
     reducer: {
@@ -19,7 +22,9 @@ export const store = configureStore({
         auth: authenticationSlice,
         roommodal:roompopupSlice,
         payments:paymentSlice,
-        rooms:roomDataSlice
+        rooms:roomDataSlice,
+        facilityImages:facilitiesImageSlice,
+        galleryImages:galleryImageSlice
     },
 });
 export default store;

@@ -1,25 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { closeFacilitiesPopup } from "../Redux/facilitiesSlice";
+import { fetchFacilityImages } from "../Redux/facilitiesImageSlice";
 import "../Styles/facilities.css";
 
 const FacilitiesPopup = () => {
     const dispatch = useDispatch();
     const isOpen = useSelector((state) => state.facilities.isOpen);
+    const facilityImagesState = useSelector((state) => state.facilityImages);
 
-    // Sample images array (replace with your actual images)
-    const images = [
-        "https://via.placeholder.com/150",
-        "https://via.placeholder.com/150",
-        "https://via.placeholder.com/150",
-        "https://via.placeholder.com/150",
-        "https://via.placeholder.com/150",
-        "https://via.placeholder.com/150",
-        "https://via.placeholder.com/150",
-        "https://via.placeholder.com/150",
-        "https://via.placeholder.com/150",
-        "https://via.placeholder.com/150",
-    ];
+    console.log("Facility Images State:", facilityImagesState);
+
+    const images = facilityImagesState?.images || [];
+    const status = facilityImagesState?.status || 'idle';
+    const error = facilityImagesState?.error || null;
+      
+    useEffect(() => {
+        if (isOpen && status === 'idle') {
+            console.log("Dispatching fetchFacilityImages");
+            dispatch(fetchFacilityImages())
+                .unwrap()
+                .then((result) => console.log("Fetch result:", result))
+                .catch((error) => console.error("Fetch error:", error));
+        }
+    }, [isOpen, status, dispatch]);
 
     if (!isOpen) return null;
 
@@ -30,11 +34,17 @@ const FacilitiesPopup = () => {
                 <p>This is your Facilities information</p>
                 
                 <div className="image-grid">
-                    {images.map((src, index) => (
-                        <div key={index} className="image-item">
-                            <img src={src} alt={`Facility ${index + 1}`} />
-                        </div>
-                    ))}
+                    {status === 'loading' && <p>Loading images...</p>}
+                    {status === 'failed' && <p>Error: {error}</p>}
+                    {status === 'succeeded' && images.length > 0 ? (
+                        images.map((image, index) => (
+                            <div key={index} className="image-item">
+                                <img src={image.url} alt={`Facility ${image.name}`} />
+                            </div>
+                        ))
+                    ) : (
+                        <p>No images available. Status: {status}</p>
+                    )}
                 </div>
 
                 <button className="close-button" onClick={() => dispatch(closeFacilitiesPopup('facilities'))}>&times;</button>

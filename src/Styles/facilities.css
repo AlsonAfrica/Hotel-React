@@ -50,7 +50,7 @@
 
 .image-item img {
     width: 100%; /* make images responsive */
-    height: auto; /* maintain aspect ratio */
+    height: 100%; /* maintain aspect ratio */
     border-radius: 4px; /* optional rounded corners */
 }
   
