@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { Modal, Box, Typography, IconButton, Grid, TextField, Select, MenuItem, InputLabel, FormControl, Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeroomPopup } from '../Redux/roompopupSlice';
-import { Close, Wifi, LocalParking, AcUnit, Pool, Restaurant } from '@mui/icons-material';
+import { Close, Wifi, LocalParking, AcUnit, Pool, Restaurant, Tv, Spa } from '@mui/icons-material';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { savePayment } from '../Redux/paymentSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
+
 const RoomModal = () => {
   const dispatch = useDispatch();
   const stripe = useStripe();
@@ -100,7 +101,9 @@ const RoomModal = () => {
     parking: <LocalParking />,
     ac: <AcUnit />,
     pool: <Pool />,
+    tv: <Tv/>,
     restaurant: <Restaurant />,
+    spa: <Spa/>
   };
   return (
     <Modal
@@ -145,6 +148,26 @@ const RoomModal = () => {
               <Typography variant="h6" sx={{ mt: 2, color: '#2196F3' }}>Payment Policies</Typography>
               <Typography variant="body2" sx={{ mt: 1 }}>
                 Payment is required at the time of booking.
+              </Typography>
+              <Typography variant="h6" sx={{ mt: 2, color: '#2196F3' }}>Refunds</Typography>
+              <Typography variant="body2" sx={{ mt: 1 }}>
+              1. <b>Non-Refundable Room Rates:</b>
+                  Certain discounted or promotional room rates may be marked as non-refundable. For these bookings:
+                  Cancellation at any time: No refund will be issued. <br/>
+
+              2. <b>Refund Processing: </b>
+                 Refunds will be processed back to the original method of payment within 5-7 business days after the cancellation is confirmed. <br/>
+              
+              3.  <b>Force Majeure: </b>
+                  In the event of unforeseen circumstances beyond our control (natural disasters, pandemics, government restrictions, etc.), guests may be eligible for a full refund or credit toward a future booking, depending on the nature of the event. <br/>
+
+              4.  <b>Refunds for Long-Term Stays: </b>
+                    <ul>
+                      <li>For long-term bookings (e.g., stays of 14 days or more):</li>
+                      <li>Cancellation 14 days or more prior to check-in: Full refund.</li>
+                      <li>Cancellation 7-13 days prior to check-in: 50% refund.</li>
+                      <li>Cancellation within 6 days of check-in or during the stay: No refund. </li>
+                    </ul>     
               </Typography>
             </Box>
           </Grid>

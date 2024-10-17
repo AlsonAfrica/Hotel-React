@@ -31,9 +31,10 @@ const RoomsList = () => {
               roomType={room.roomType}
               image={room.image}
               price={room.price}
-              occupants={room.occupants}
+              occupants={room.capacity}
               rating={room.rating}
               amenities={room.amenities}
+              isAvailable={room.availability}
             />
           </Grid>
         ))}
