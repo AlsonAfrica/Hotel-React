@@ -7,10 +7,30 @@ import TvIcon from '@mui/icons-material/Tv';
 import SpaIcon from '@mui/icons-material/Spa';
 import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import { openroomPopup } from '../Redux/roompopupSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { addLikedRoom } from '../Redux/likesSlice';
+import { removeLikedRoom } from '../Redux/likesSlice';
 
 const Rooms = ({ roomType, image, price, occupants, rating, amenities, isAvailable }) => {
     const dispatch = useDispatch();
+    
+    // state of liked rooms
+    const handleLikeRoom = ()=>{
+        const roomDetails={
+            roomType,
+            image,
+            price,
+            occupants,
+            rating,
+            amenities,
+        };
+        dispatch(addLikedRoom(roomDetails))
+        setSuccessMessage('Room added to favorites!');
+
+        setTimeout(()=>{
+            setSuccessMessage('')
+        },3000)
+    }
 
     const handleViewRoom = () => {
         const roomDetails = {
@@ -131,7 +151,7 @@ const Rooms = ({ roomType, image, price, occupants, rating, amenities, isAvailab
 
                 {/* Like & Share Buttons */}
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-                    <IconButton aria-label="like" sx={{ color: '#ff4081' }}>
+                    <IconButton aria-label="like" sx={{ color: '#ff4081' }} onClick={handleLikeRoom}>
                         <Favorite />
                     </IconButton>
                     <IconButton aria-label="share" sx={{ color: '#3f51b5' }}>

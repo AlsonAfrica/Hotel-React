@@ -11,7 +11,7 @@ import roomDataSlice from "./roomDataSlice";
 import facilitiesImageSlice from "./facilitiesImageSlice";
 import galleryImageSlice from "./galleryImageSlice";
 import loggedInUserSlice from "./loggedInUserSlice";
-
+import likesRoomSlice from "./likesSlice"
 // Slices to monitor state changes
 export const store = configureStore({
     reducer: {
@@ -26,7 +26,8 @@ export const store = configureStore({
         rooms:roomDataSlice,
         facilityImages:facilitiesImageSlice,
         galleryImages:galleryImageSlice,
-        user:loggedInUserSlice
+        user:loggedInUserSlice,
+        likedRooms:likesRoomSlice         
     },
 });
 export default store;

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { closeProfilePopup } from "../Redux/profileSlice";
-import { Box, Button, TextField, Typography, Tab, Tabs, Rating } from '@mui/material';
+import { Box, Button, TextField, Typography, Tab, Tabs, Rating,Card,CardContent,CardMedia } from '@mui/material';
 import { Book, Favorite, Message, RateReview, Person } from '@mui/icons-material'; 
 import { fetchUserData } from "../Redux/loggedInUserSlice"; // Your redux action
 import { auth } from "../FirebaseConfig/firebase";
 import "../Styles/profile.css";
+import { addLikedRoom } from "../Redux/likesSlice";
 import { Firestore } from "firebase/firestore";
-import zIndex from "@mui/material/styles/zIndex";
+
 
 const ProfilePopup = () => {
     const dispatch = useDispatch();
@@ -19,6 +20,12 @@ const ProfilePopup = () => {
     const [reviewTitle, setReviewTitle] = useState('');
     const [reviewContent, setReviewContent] = useState('');
     const [rating, setRating] = useState(0);
+
+
+    
+    const likedRooms = useSelector((state)=>state.likedRooms.rooms)
+
+
 
     useEffect(() => {
         if (isOpen) {
@@ -109,7 +116,29 @@ const ProfilePopup = () => {
                     </Tabs>
                     <Box sx={{ p: 2, border: '1px solid #e0e0e0', borderRadius: '4px', backgroundColor: '#fafaf' }}>
                         {activeTab === 0 && <Typography variant="body1">Bookings content goes here...</Typography>}
-                        {activeTab === 1 && <Typography variant="body1">Favorites content goes here...</Typography>}
+                        {activeTab === 1 && <Typography variant="body1">Favorites content goes here...
+                            {likedRooms.length === 0 ? (
+                                <Typography>No favorite rooms yet.</Typography>
+                                ) : (
+                                likedRooms.map((room, index) => (
+                                    <Card key={index} sx={{ display: 'flex', mb: 2, boxShadow: 3, maxWidth: 600 }}>
+                                    <CardMedia
+                                        component="img"
+                                        sx={{ width: 150 }}
+                                        image={room.image} // Ensure this contains a valid image URL
+                                        alt={room.roomType}
+                                    />
+                                    <Box sx={{ display: 'flex', flexDirection: 'column', p: 2 }}>
+                                        <Typography variant="h6">{room.roomType}</Typography>
+                                        <Typography variant="body2">Price: R{room.price} / night</Typography>
+                                        <Typography variant="body2">Occupants: {room.occupants}</Typography>
+                                        <Typography variant="body2">Rating: {room.rating}</Typography>
+                                        <Typography variant="body2">Amenities: {room.amenities.join(', ')}</Typography>
+                                    </Box>
+                                    </Card>
+                                ))
+                                )}
+                        </Typography>}
                         {activeTab === 2 && <Typography variant="body1">Messages content goes here...</Typography>}
                         {activeTab === 3 && (
                             <Box component="form" onSubmit={handleReviewSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 2 }}>
