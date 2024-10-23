@@ -32,7 +32,7 @@ const GalleryPopup = ()=>{
     return (
         <div className="popup-overlay">
         <div className="popup">
-        <h2>Messages</h2>
+        <h2>Gallery</h2>
         <p>This is your Gallery information</p>
         
         {/* Display images in a grid format  */}

@@ -94,6 +94,7 @@ const Navbar = () => {
   ];
 
   return (
+    // Navbar structure
     <>
       <AppBar position="fixed" sx={{ backgroundColor: 'black', boxShadow: 'none' }}>
         <Toolbar>
@@ -148,8 +149,10 @@ const Navbar = () => {
         </Toolbar>
       </AppBar>
       {/* {Conditionally display loader} */}
+      <Box sx={{display:'flex',width:"100%", height:"100%", justifyContent:"center", alignItem:"center",margin:"0", top:"0"}}>
       {loading && <Loader/>}
-
+      </Box>
+      
       {/* Facilities Popup Component */}
        <FacilitiesPopup/>
        <GalleryPopup/>
