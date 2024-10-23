@@ -1,0 +1,32 @@
+/* Loader container styles */
+.Loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full height of the viewport */
+    width:100vw;
+    background-color: white; /* Semi-transparent background to see content behind */
+    z-index: 9999999; /* Ensure it is above other elements */
+    position: fixed; /* Fixed position for scrolling */
+  }
+  
+  /* Loader image styles */
+  .loader-image {
+    width: 100px;
+    height: 100px;
+    animation: growShrink 2s infinite ease-in-out; /* Animation */
+  }
+  
+  /* Grow and shrink animation */
+  @keyframes growShrink {
+    0% {
+      transform: scale(1); /* Original size */
+    }
+    50% {
+      transform: scale(1.5); /* Grow at 50% */
+    }
+    100% {
+      transform: scale(1); /* Shrink back to original */
+    }
+  }
+  

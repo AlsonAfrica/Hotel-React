@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -23,31 +23,43 @@ import PoliciesPopup from './policies';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import ProfilePopup from './profilePopup';
+import Loader from './loader';
+
 
 const Navbar = () => {
+
+  // state of the loader
+  const [loading,setLoading]=useState(false);
+
+  // Media query for navbar
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
+  
   const [anchorEl, setAnchorEl] = useState(null);
 
   const dispatch = useDispatch();
 
+  // Hamburger 
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
+  
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
 
   const navigate = useNavigate();
-
+  
+  // Navigates to authentication page
   const handleNavigate = ()=>{
     navigate ('/authetication');
   }
 
+  // Handle Routing and Page Navigation from the navbar 
   const handleButtonClick = (label) => {
-    if (label === 'Facilities') {
+    setLoading(true);
+    setTimeout(()=>{
+      if (label === 'Facilities') {
       dispatch(openFacilitiesPopup()); // Open the Facilities popup
     } else if (label === 'Gallery') {
       dispatch(openGalleryPopup()); // Open the Gallery popup
@@ -63,8 +75,11 @@ const Navbar = () => {
     else {
       console.log(`Clicked: ${label}`);
     }
+    setLoading(false);
+    },2000)  
   };
 
+  // Navbar buttons
   const menuItems = [
     // { label: 'Rooms', color: '#FF6347' },
     { label: 'Facilities', color: '#1E90FF' },
@@ -72,7 +87,7 @@ const Navbar = () => {
     { label: 'Policies', color: '#FFD700' },
     { label: 'Reviews', color: '#FF69B4' },
       // Conditionally include "Explore Rooms" button if NOT on HomePage
-      ...(location.pathname !== '/homePage' ? [{ label: 'Explore Rooms', color: '#FF69B4' }] : []),
+      ...(location.pathname !== '/homePage' ? [{ label: 'Explore Rooms', color: '#55B4B0' }] : []),
       // Conditionally include "Profile" button if on HomePage
       ...(location.pathname === '/homePage' ? [{ label: 'PROFILE', color: '#FF69B4' }] : []),
 
@@ -132,6 +147,8 @@ const Navbar = () => {
           )}
         </Toolbar>
       </AppBar>
+      {/* {Conditionally display loader} */}
+      {loading && <Loader/>}
 
       {/* Facilities Popup Component */}
        <FacilitiesPopup/>

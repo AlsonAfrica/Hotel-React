@@ -57,7 +57,7 @@ const RoomModal = () => {
         setError('Payment failed: ' + error);
         setLoading(false);
       }
-    }
+    }   
   };
   const handleButtonClick = () =>{
     if (location.pathname === '/home'){
