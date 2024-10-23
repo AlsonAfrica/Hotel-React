@@ -13,6 +13,38 @@ import { removeLikedRoom } from '../Redux/likesSlice';
 
 const Rooms = ({ roomType, image, price, occupants, rating, amenities, isAvailable }) => {
     const dispatch = useDispatch();
+
+
+    // share function using web share api 
+    const handleShareRoom = async () => {
+        if (navigator.share) {
+          // Define the room details
+          const roomDetails = {
+            roomType,
+            image,
+            price,
+            occupants,
+            rating,
+            amenities,
+          };
+      
+          // Prepare the shareable data
+          navigator.share({
+            title: `Check out this ${roomDetails.roomType} room!`,  // Title for the shared content
+            text: `This room is available for ${roomDetails.price}. It includes amenities like ${roomDetails.amenities}. Rated ${roomDetails.rating} stars.`,  // Description
+            url: window.location.href,  // Share the current page URL
+          })
+            .then(() => {
+              console.log("Content shared successfully");
+            })
+            .catch((error) => {
+              console.error("Error sharing content", error);
+            });
+        } else {
+          alert("Web Share API is not supported in this browser.");
+        }
+      };
+      
     
     // state of liked rooms
     const handleLikeRoom = ()=>{
@@ -154,7 +186,7 @@ const Rooms = ({ roomType, image, price, occupants, rating, amenities, isAvailab
                     <IconButton aria-label="like" sx={{ color: '#ff4081' }} onClick={handleLikeRoom}>
                         <Favorite />
                     </IconButton>
-                    <IconButton aria-label="share" sx={{ color: '#3f51b5' }}>
+                    <IconButton aria-label="share" sx={{ color: '#3f51b5' }} onClick={handleShareRoom}>
                         <Share />
                     </IconButton>
                 </Box>
