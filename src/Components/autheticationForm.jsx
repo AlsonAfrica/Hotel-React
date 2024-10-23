@@ -88,7 +88,8 @@ const SignInRegisterForm = () => {
         p: 3,
         borderRadius: 2,
         boxShadow: 3,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        
       }}
     >
       <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
