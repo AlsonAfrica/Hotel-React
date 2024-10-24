@@ -9,10 +9,13 @@ import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import { openroomPopup } from '../Redux/roompopupSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { addLikedRoom } from '../Redux/likesSlice';
+import { useState } from 'react';
 import { removeLikedRoom } from '../Redux/likesSlice';
 
 const Rooms = ({ roomType, image, price, occupants, rating, amenities, isAvailable }) => {
     const dispatch = useDispatch();
+    // Success message state
+    const [successMessage,setSuccessMessage] = useState("")
 
 
     // share function using web share api 
@@ -208,6 +211,14 @@ const Rooms = ({ roomType, image, price, occupants, rating, amenities, isAvailab
                     View Room
                 </Button>
             </CardContent>
+            <Box>
+                {/* display success message once the rooms are added successfully */}
+                {successMessage && (
+                    <div style={{ color: 'green', fontSize: '16px', padding: '10px', backgroundColor: '#f0f4f7', borderRadius: '5px' }}>
+                    {successMessage}
+                    </div>
+                )}
+            </Box>
         </Card>
     );
 };
