@@ -52,43 +52,99 @@ const HomePage = () => {
             </div>
 
            
-            <div className="footer">
-                 <div className="footer-section map">
-                   <MapComponent/>
-                 </div>
-                 <div className="quick-links">
-                    <h1>Quick Links</h1>
-                    <ul>
-                        <li><a href="/rooms">Rooms</a></li>
-                        <li><a href="/facilities">Facilities</a></li>
-                        <li><a href="/gallery">Gallery</a></li>
-                        <li><a href="/about">About Us</a></li>
-                        <li><a href="/contact">Contact</a></li>
-                   </ul>
-                 </div>
-                 <div className="Follow-Us">
-                    <h1>Follow Us</h1>
-                    <div className="social-icons">
-                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                            <FaFacebookF />
-                        </a>
-                        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                            <FaTwitter />
-                        </a>
-                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                            <FaInstagram />
-                        </a>
-                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                            <FaLinkedinIn />
-                        </a>
-                    </div>
-                 </div>
-                 <div className="Contact-Us">
-                    <h1>Contact-Us</h1>
-                    <p>Phone: +123-456789</p>
-                    <p>Email: contact@Kingsfortunehotel.com</p>
-                 </div>
+            <footer className="footer">
+        <div className="footer-container">
+          <div className="footer-content">
+            {/* Map Section */}
+            <div className="footer-section">
+              <div className="map">
+                <MapComponent />
+              </div>
             </div>
+
+            {/* Quick Links Section */}
+            <div className="footer-section quick-links">
+              <h3>Quick Links</h3>
+              <ul>
+                {[
+                  { name: "Rooms", href: "/rooms" },
+                  { name: "Facilities", href: "/facilities" },
+                  { name: "Gallery", href: "/gallery" },
+                  { name: "About Us", href: "/about" },
+                  { name: "Contact", href: "/contact" },
+                ].map((link) => (
+                  <li key={link.name}>
+                    <a href={link.href}>{link.name}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="footer-section contact-us">
+              <h3>Contact Us</h3>
+              <p>
+                Phone: <a href="tel:+123456789">+123-456789</a>
+              </p>
+              <p>
+                Email:{" "}
+                <a href="mailto:contact@Kingsfortunehotel.com">
+                  contact@Kingsfortunehotel.com
+                </a>
+              </p>
+            </div>
+
+            {/* Follow Us Section */}
+            <div className="footer-section">
+              <h3>Follow Us</h3>
+              <div className="social-icons">
+                {[
+                  {
+                    icon: <FaFacebookF />,
+                    href: "https://facebook.com",
+                    label: "Facebook",
+                  },
+                  {
+                    icon: <FaTwitter />,
+                    href: "https://twitter.com",
+                    label: "Twitter",
+                  },
+                  {
+                    icon: <FaInstagram />,
+                    href: "https://instagram.com",
+                    label: "Instagram",
+                  },
+                  {
+                    icon: <FaLinkedinIn />,
+                    href: "https://linkedin.com",
+                    label: "LinkedIn",
+                  },
+                ].map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    className="social-icon"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.label}
+                  >
+                    {social.icon}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Contact Us Section */}
+          </div>
+
+          {/* Copyright Section */}
+          <div className="copyright">
+            <p>
+              © {new Date().getFullYear()} Kings Fortune Hotel. All rights
+              reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
      );
 }

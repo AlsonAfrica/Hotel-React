@@ -205,50 +205,138 @@
     align-items: start;
     padding:10px;
 }
-.footer{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    margin-top: 50px;
-     height:300px;
-     background-color: black;
-     gap:50px;
-     padding:10px;
-}
-.footer-section {
-    padding:10px;
-}
-.quick-links{
-    color:white;
-}
-.quick-links a{
+/* Footer.css */
+.footer {
+    background-color: #000000;
+    color: #e0e0e0;
+    padding: 10rem 2rem;
+    min-height: 520px;
+  
+  }
+  
+  .footer-container {
+    max-width: 1200px;
+    height:100%;
+    margin: 0 auto;
+  }
+  
+  .footer-content {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4rem;
+    background-color: #1a1a1a;
+  }
+  
+  .footer-section h3 {
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Map Section */
+  .map {
+    height: 300px;
+    width: 100%;
+  }
+  
+  /* Quick Links Section */
+  .quick-links ul {
     list-style: none;
-    color:white;
-    padding-top:10px;
-}
-.quick-links li{
-    list-style: none;
-}
-
-.Follow-Us{
-    color:white;
-}
-.Contact-Us{
-    color:white;
-}
-.social-icons{
-    margin-top: 10px;
-    color:white;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .quick-links li {
+    margin-bottom: 0.75rem;
+  }
+  
+  .quick-links a {
+    color: #e0e0e0;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .quick-links a:hover {
+    color: white;
+  }
+  
+  /* Social Icons Section */
+  .social-icons {
     display: flex;
-    justify-content: space-between;
-}
-.social-icons a {
-    color:white;
-}
+    gap: 1rem;
+  }
+  
+  .social-icon {
+    background-color: #333;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #e0e0e0;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+  }
+  
+  .social-icon:hover {
+    background-color: #444;
+  }
+  
+  /* Contact Section */
+  .contact-us a {
+    color: #e0e0e0;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .contact-us a:hover {
+    color: white;
+  }
+  
+  /* Copyright Section */
+  .copyright {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #333;
+    text-align: center;
+    font-size: 0.875rem;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .footer-content {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .footer-content {
+      grid-template-columns: 1fr;
+      height:100%
+    }
+    
+    .footer {
+      padding: 3rem 1rem;
+      min-height: 1000px;
+    }
+    
+    .footer-section {
+      margin-bottom: 2rem;
+    }
+    
+    .map {
+      height: 180px;
+    }
+  }
 .rooms-text{
     margin-top: 30px;
     text-align: center;
 }
 .about-header{
     font-size: 1.5rem;
+}
+.copyright {
+  color:#129dc0;
 }
