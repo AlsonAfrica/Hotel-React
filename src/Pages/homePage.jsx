@@ -13,8 +13,34 @@ import gym from "../assets/gym.jpg"
 import parking from "../assets/parking.jpg"
 import { Link } from 'react-router-dom';
 import RoomsList from "../Components/roomlist";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchRooms } from '../Redux/roomDataSlice';
 
 const HomePage = () => {
+
+  const dispatch = useDispatch();
+  const { rooms, loading, error } = useSelector((state) => state.rooms);
+  const [filteredRooms, setFilteredRooms] = useState([]);
+
+  // Constant Search For Rooms and pass them to setfilter for search filtering
+  useEffect(() => {
+    setFilteredRooms(rooms); 
+  }, [rooms]);
+
+  // fetch rooms from redux
+  useEffect(() => {
+    dispatch(fetchRooms());
+  }, [dispatch]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
     return ( 
     <div className="pages-wrapper">
         <div className="navbar-pages">
@@ -42,12 +68,12 @@ const HomePage = () => {
             </div>
         </div>
             <div className="search-bar">
-             <SearchBar/>
+             <SearchBar rooms={rooms} onFilter={setFilteredRooms}/>
             </div>  
             <div className="Rooms">
                 <div className="rooms-text"><h1>View Our Rooms</h1></div>
                  <div>
-                    <RoomsList/>
+                    <RoomsList rooms={filteredRooms}/>
                  </div>
             </div>
 

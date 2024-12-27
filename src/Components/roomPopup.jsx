@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Modal, Box, Typography, IconButton, Grid, TextField, Select, MenuItem, InputLabel, FormControl, Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeroomPopup } from '../Redux/roompopupSlice';
@@ -6,19 +6,44 @@ import { Close, Wifi, LocalParking, AcUnit, Pool, Restaurant, Tv, Spa } from '@m
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { savePayment } from '../Redux/paymentSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { fetchUserData } from "../Redux/loggedInUserSlice"; 
 
-const RoomModal = () => {
+const RoomModal = ({userId}) => {
+
+  // States
   const dispatch = useDispatch();
   const stripe = useStripe();
   const navigate = useNavigate();
   const location = useLocation();
   const elements = useElements();
-  const [loading, setLoading] = useState(false); // Initialize loading state
+  const [loading, setLoading] = useState(false); 
   const { isOpen, selectedRoom } = useSelector((state) => state.roommodal);
   const [checkInDate, setCheckInDate] = useState('');
-  const [checkOutDate, setCheckOutDate] = useState(''); // Fixed typo here
+  const [checkOutDate, setCheckOutDate] = useState(''); 
   const [numPeople, setNumPeople] = useState(1);
   const [error, setError] = useState('');
+  const userData = useSelector((state) => state.user.userData);
+  
+
+  // console.log("this is user data",userData);
+
+
+  // Functions 
+
+  useEffect(() => {
+    if (userId) {
+      dispatch(fetchUserData(userId));
+    }
+
+    // Optional: Clear user data when component unmounts
+    // return () => {
+    //   dispatch(clearUserData());
+    // };
+  }, [dispatch, userId]);
+
+  console.log("This is the user",userData)
+
+  // Stripe Function
   if (!selectedRoom) return null;
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -43,22 +68,34 @@ const RoomModal = () => {
       console.log('[PaymentMethod]', paymentMethod);
       try {
         await dispatch(savePayment({
+          User: userData.email,
+          UserId: userData.id,
+          Phone:userData.cellphone,
           amountPaid: selectedRoom.price * numPeople,
           checkInDate,
           checkOutDate,
           numPeople,
           roomType: selectedRoom.roomType,
-          paymentMethodId: paymentMethod.id,
+          paymentMethodId: paymentMethod.id, 
         }));
+
         setLoading(false);
+
         alert('Payment Successful!');
+
         dispatch(closeroomPopup());
+        
       } catch (error) {
         setError('Payment failed: ' + error);
         setLoading(false);
       }
     }   
   };
+
+
+
+
+
   const handleButtonClick = () =>{
     if (location.pathname === '/home'){
       handleSubmit()
@@ -66,6 +103,8 @@ const RoomModal = () => {
       navigate("/authetication");
     }
   }
+
+  // PopUps styling
   const modalStyle = {
     position: 'absolute',
     top: '50%',
@@ -80,6 +119,9 @@ const RoomModal = () => {
     borderRadius: '12px',
     overflowY: 'auto',
   };
+
+
+  // Header Styles
   const headerStyle = {
     display: 'flex',
     justifyContent: 'space-between',
@@ -88,6 +130,8 @@ const RoomModal = () => {
     borderBottom: '2px solid #2196F3',
     paddingBottom: '10px',
   };
+
+  // Amenities Styles
   const amenityStyle = {
     display: 'flex',
     alignItems: 'center',
@@ -96,6 +140,8 @@ const RoomModal = () => {
     padding: '5px 10px',
     marginRight: '10px',
   };
+
+  // Amenities Icon
   const amenitiesIcons = {
     wifi: <Wifi />,
     parking: <LocalParking />,
@@ -105,7 +151,12 @@ const RoomModal = () => {
     restaurant: <Restaurant />,
     spa: <Spa/>
   };
+
+
   return (
+
+    // User Interface beginning
+
     <Modal
       open={isOpen}
       onClose={() => dispatch(closeroomPopup())}
@@ -242,6 +293,7 @@ const RoomModal = () => {
         </Grid>
       </Box>
     </Modal>
+    // User Interface Ending
   );
 };
 export default RoomModal;
