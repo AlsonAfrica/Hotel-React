@@ -18,9 +18,37 @@ import gym from "../assets/gym.jpg";
 import parking from "../assets/parking.jpg";
 import { Link } from "react-router-dom";
 import RoomsList from "../Components/roomlist";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchRooms } from '../Redux/roomDataSlice';
 
 const LandingPage = () => {
+
+  // States
+  const dispatch = useDispatch();
+  const { rooms, loading, error } = useSelector((state) => state.rooms);
+  const [filteredRooms, setFilteredRooms] = useState([]);
+
+  // Constant Search For Rooms and pass them to setfilter for search filtering
+  useEffect(() => {
+    setFilteredRooms(rooms); 
+  }, [rooms]);
+
+  // fetch rooms from redux
+  useEffect(() => {
+    dispatch(fetchRooms());
+  }, [dispatch]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
+    // Display user Interface
     <div className="pages-wrapper">
       <div className="navbar-pages">
         <Navbar />
@@ -53,18 +81,18 @@ const LandingPage = () => {
         </div>
       </div>
       <div className="search-bar">
-        <SearchBar />
+       <SearchBar rooms={rooms} onFilter={setFilteredRooms} />
       </div>
       <div className="Rooms">
         <div className="rooms-text">
           <h1>View Our Rooms</h1>
         </div>
         <div>
-          <RoomsList />
+          <RoomsList rooms={filteredRooms}/>
         </div>
       </div>
 
-      <div className="about">
+      {/* <div className="about">
         <div className="photo-about">
           <div className="photo-about-1">
             <img src={pool}></img>
@@ -102,7 +130,7 @@ const LandingPage = () => {
             our staff is committed to making your stay comfortable and seamless.
           </p>
         </div>
-      </div>
+      </div> */}
       <footer className="footer">
         <div className="footer-container">
           <div className="footer-content">
