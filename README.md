@@ -58,7 +58,7 @@ Get the application running locally by following these steps:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/react-hotel-app.git
+[git clone https://github.com/yourusername/react-hotel-app.git](https://github.com/AlsonAfrica/Hotel-React.git)
 
 # Navigate to project directory
 cd react-hotel-app
