@@ -61,3 +61,57 @@
 .close-button:hover {
     color: #ff0000; /* Change color on hover */
 }
+.popup-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+/* Loading and error message styling */
+.loading-message,
+.error-message {
+  font-size: 16px;
+  color: #555;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Reviews list container */
+.reviews-list {
+  margin-top: 20px;
+}
+
+/* Individual review item styling */
+.review-item {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.review-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.review-date {
+  font-size: 14px;
+  color: #888;
+}
+
+.review-content {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.5;
+}
+

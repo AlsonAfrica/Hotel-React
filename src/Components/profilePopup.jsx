@@ -26,6 +26,7 @@ import "../Styles/profile.css";
 import { addLikedRoom } from "../Redux/likesSlice";
 import { Firestore } from "firebase/firestore";
 import RoomModal from "./roomPopup";
+import { postReview } from "../Redux/ReviewsSlice";
 
 const ProfilePopup = () => {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ const ProfilePopup = () => {
   const [reviewTitle, setReviewTitle] = useState("");
   const [reviewContent, setReviewContent] = useState("");
   const [rating, setRating] = useState(0);
+  const [reviewsent, setReviewsent] = useState(false)
 
   const likedRooms = useSelector((state) => state.likedRooms.rooms);
 
@@ -57,16 +59,30 @@ const ProfilePopup = () => {
     setActiveTab(newValue);
   };
 
+//   Submit reviews function
   const handleReviewSubmit = (event) => {
+    
     event.preventDefault();
-    console.log("Review submitted:", {
-      title: reviewTitle,
-      content: reviewContent,
-      rating,
-    });
+   
+    // Review container
+    const newReview = {
+        id: Date.now().toString(), 
+        title: reviewTitle,
+        content: reviewContent,
+        rating: rating,
+      };
+
+    // Dispatch the postReview action to save the review to Firebase
+    dispatch(postReview(newReview));
+
+    setReviewsent(true)
+
+     // Reset rating after submission
     setReviewTitle("");
     setReviewContent("");
-    setRating(0); // Reset rating after submission
+    setRating(0);
+    
+    setReviewsent(false)
   };
 
   return (
@@ -215,6 +231,7 @@ const ProfilePopup = () => {
                   precision={0.5}
                   sx={{ mb: 2 }}
                 />
+                 {reviewsent && <p style={{color:"green"}}>Thanks for Sending your review, Highly appreciate your response</p>}
                 <Button type="submit" variant="contained" color="primary">
                   Submit Review
                 </Button>
