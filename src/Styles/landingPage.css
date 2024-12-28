@@ -15,7 +15,8 @@
     width:40%;
     text-align: center;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    padding-top:2rem;
     justify-content: center;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
@@ -206,73 +207,8 @@
 }
 
 /* Media Queries */
-@media screen and (max-width: 1024px) {
-  .photo-about-1 img { width: 250px; height: 250px; }
-  .photo-about-2 img { width: 200px; height: 200px; }
-  .photo-about-3 img { width: 150px; height: 150px; }
-  .photo-about-4 img { width: 80px; height: 80px; }
-}
 
-@media screen and (max-width: 768px) {
-  .about {
-      flex-direction: column;
-      height: auto;
-      min-height: 60vh;
-  }
-  
-  .photo-about,
-  .about-text {
-      width: 100%;
-      min-height: 40vh;
-      display: none;
-  }
 
-  .photo-about-1 img { 
-      width: 200px; 
-      height: 200px;
-      left: 2%;
-  }
-  .photo-about-2 img { 
-      width: 150px; 
-      height: 150px;
-      right: 30%;
-  }
-  .photo-about-3 img { 
-      width: 120px; 
-      height: 120px;
-      right: 10%;
-  }
-  .photo-about-4 img { 
-      width: 60px; 
-      height: 60px;
-      right: 5%;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .photo-about-1 img { 
-      width: 150px; 
-      height: 150px;
-  }
-  .photo-about-2 img { 
-      width: 120px; 
-      height: 120px;
-      right: 20%;
-  }
-  .photo-about-3 img { 
-      width: 90px; 
-      height: 90px;
-  }
-  .photo-about-4 img { 
-      width: 50px; 
-      height: 50px;
-  }
-  
-  .about-par {
-      padding: 15px;
-      text-align: center;
-  }
-}
 /* Footer.css */
 .footer {
     background-color: #000000;
@@ -408,3 +344,89 @@
 .copyright {
   color:#129dc0;
 }
+.pages-photo{
+  display: none;
+}
+
+/* Your existing CSS remains the same until the media queries */
+
+/* For medium screens (tablets) */
+@media screen and (max-width: 768px) {
+  .hero-pages {
+      height: 70vh; /* Increased height for better content spacing */
+  }
+  
+  .pages-text {
+      width: 50%; /* Slightly wider text section */
+  }
+  
+  .pages-photo {
+      width: 50%; /* Adjust photo section accordingly */
+  }
+  
+  .photo-1 img {
+      width: 80px; /* Slightly smaller images */
+      height: 80px;
+      top: 20%;
+      left: 10%;
+  }
+  
+  .photo-2 img {
+      width: 60px;
+      height: 60px;
+      right: 30%;
+  }
+  
+  .photo-3 img {
+      width: 50px;
+      height: 50px;
+      right: 15%;
+  }
+  
+  .photo-4 img {
+      width: 35px;
+      height: 35px;
+      right: 5%;
+  }
+}
+
+/* For small screens (mobile) */
+@media screen and (max-width: 480px) {
+  .hero-pages {
+      height: auto; /* Let height adjust to content */
+      min-height: 100vh; /* Ensure minimum full viewport height */
+  }
+  
+  .pages-text {
+      width: 90%; /* Full width */
+      height: auto; /* Adjust height to content */
+      flex-direction: row;
+      text-align: center;
+      justify-content: center;
+      margin-top: 5rem;
+      margin-left: 8rem;
+      text-align: center;
+      max-width: 800px;
+  }
+  
+  .pages-photo {
+      display: none;
+  }
+  
+  .photo-1 img {
+    display: none;
+  }
+  
+  .photo-2 img {
+    display: none;
+  }
+  
+  .photo-3 img {
+    display: none;
+  }
+  
+  .photo-4 img {
+    display: none;
+  }
+}
+
