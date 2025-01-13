@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import facilitiesSlice from "./facilitiesSlice";
 import gallerySlice from "./gallerySlice";
-import reviewsSlice from "./ReviewsSlice"
+import reviewsSlice from "./reviewsSlice"
 import policiesSlice from "./policiesSlice";
 import profileSlice from "./profileSlice";
 import authenticationSlice from "./authenticationSlice";
@@ -12,7 +12,7 @@ import facilitiesImageSlice from "./facilitiesImageSlice";
 import galleryImageSlice from "./galleryImageSlice";
 import loggedInUserSlice from "./loggedInUserSlice";
 import likesRoomSlice from "./likesSlice"
-// import fetchreviewSlice from "./fetchreviewSlice";
+import fetchreviewSlice from "./fetchreviewSlice";
 
 // Slices to monitor state changes
 export const store = configureStore({
@@ -30,7 +30,7 @@ export const store = configureStore({
         galleryImages:galleryImageSlice,
         user:loggedInUserSlice,
         likedRooms:likesRoomSlice,
-        // fetchreviews: fetchreviewSlice         
+        fetchreviews: fetchreviewSlice         
     },
 });
 export default store;
