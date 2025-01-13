@@ -14,7 +14,7 @@ import { useDispatch } from 'react-redux';
 import { openFacilitiesPopup } from '../Redux/facilitiesSlice';
 import { openGalleryPopup } from '../Redux/gallerySlice';
 import { openPoliciesPopup } from '../Redux/policiesSlice';
-import { openReviewsPopup } from '../Redux/ReviewsSlice';
+import { openReviewsPopup } from '../Redux/reviewsSlice';
 import { openProfilePopup } from '../Redux/profileSlice';
 import FacilitiesPopup from './facilitiesPopup';
 import GalleryPopup from './galleryPopup';
