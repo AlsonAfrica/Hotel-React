@@ -26,7 +26,7 @@ import "../Styles/profile.css";
 import { addLikedRoom } from "../Redux/likesSlice";
 import { Firestore } from "firebase/firestore";
 import RoomModal from "./roomPopup";
-import { postReview } from "../Redux/ReviewsSlice";
+import { postReview } from "../Redux/reviewsSlice";
 
 const ProfilePopup = () => {
   const dispatch = useDispatch();
