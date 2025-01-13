@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { closeReviewsPopup, fetchReviews } from "../Redux/ReviewsSlice";
+import { closeReviewsPopup, fetchReviews } from "../Redux/reviewsSlice";
 import "../Styles/reviews.css";
 
 const ReviewsPopup = () => {
