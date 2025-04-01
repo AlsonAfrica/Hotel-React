@@ -77,6 +77,7 @@ npm run dev
 *Welcome screen featuring key highlights and navigation*
 
 Hotel App Hosted Link: (https://hotel-react-7rdu.onrender.com/)
+Admin Panel Hosted Link: https://hotel-admin-panel-beryl.vercel.app/
 
 ## 🤝 Contributing
 
